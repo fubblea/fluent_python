@@ -51,3 +51,52 @@ def match_case():
 
             case _:
                 print("Default case")
+
+
+def with_dicts(record: dict) -> list:
+    """Function that gets the creators from a record
+
+    Parameters
+    ----------
+    record : dict
+        Input data
+
+    Returns
+    -------
+    list
+        Creators
+
+    >>> with_dicts(dict(api=1, author="Ajay Anand", type="book"))
+    ['Ajay Anand']
+
+    Order does not matter:
+    >>> from typing import OrderedDict
+    >>> with_dicts(OrderedDict(api=1, author="Ajay Anand", type="book"))
+    ['Ajay Anand']
+
+    >>> with_dicts(dict(api=2, authors="Anand Holden".split(), type="book", pages=200))
+    ['Anand', 'Holden']
+
+    >>> with_dicts(dict(api=3, authors="Anand Holden".split(), type="book", pages=200))
+    Other details: {'pages': 200}
+    ['Anand', 'Holden']
+
+    """
+
+    match record:
+        case {"type": "book", "api": 3, "authors": [*names], **details}:
+            print(f"Other details: {details}")
+            return names
+
+        case {"type": "book", "api": 2, "authors": [*names]}:
+            return names
+
+        case {"type": "book", "api": 1, "author": name}:
+            return [name]
+
+        case {"type": "book"}:
+            # The "!r" means use the __repr__() instead of the __str__()
+            raise ValueError(f"Invalid record: {record!r}")
+
+        case _:
+            raise ValueError(f"Unable to parse record: {record!r}")
