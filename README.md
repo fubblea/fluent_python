@@ -1,3 +1,3 @@
 # Fluent Python
 
-These are experiments from the book Fluent Python 2nd Ed.
+These are experiments from the book [Fluent Python 2nd Ed](https://www.amazon.com/Fluent-Python-Concise-Effective-Programming/dp/1492056359).
