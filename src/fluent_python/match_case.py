@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 METRO_AREAS = [
     ("Tokyo", "JP", 36.933, (35.689722, 139.691667)),
     ("Dehli NCR", "IN", 21.935, (28.613889, 77.208889)),
@@ -100,3 +102,42 @@ def with_dicts(record: dict) -> list:
 
         case _:
             raise ValueError(f"Unable to parse record: {record!r}")
+
+
+@dataclass
+class City:
+    continent: str
+    country: str
+
+
+def match_case_with_class():
+    """Match case with class
+
+    >>> match_case_with_class()
+    Asia: ['JP', 'IN']
+    North America: ['MX', 'US']
+    """
+
+    asia = []
+    north_america = []
+
+    cities = [
+        City(continent="Asia", country="JP"),
+        City(continent="Asia", country="IN"),
+        City(continent="North America", country="MX"),
+        City(continent="North America", country="US"),
+    ]
+
+    for city in cities:
+        match city:
+            case City(continent="Asia", country=country):
+                asia.append(country)
+
+            case City(continent="North America", country=country):
+                north_america.append(country)
+
+            case _:
+                print(f"Unknown city: {city}")
+
+    print(f"Asia: {asia}")
+    print(f"North America: {north_america}")
